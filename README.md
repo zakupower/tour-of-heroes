@@ -7,7 +7,7 @@ Following the [Tour of heroes - angular.io tutorial](https://angular.io/tutorial
 - [x] Introduction
 - [x] Create a project
 - [x] 1 . The hero editor
-- [ ] 2 . Diplay a list
+- [x] 2 . Display a list
 - [ ] 3 . Create a feature component
 - [ ] 4 . Add services
 - [ ] 5 . Add navigation
@@ -127,5 +127,34 @@ imports: [
   BrowserModule,
   FormsModule
 ],
+```
+
+------
+
+The `*ngFor` is Angular's **repeater** directive. It repeats the host element for each element in a collection. Host element is one it is placed on.
+
+```html
+<li *ngFor="let hero of heroes">
+    <button type="button" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+      <span class="badge">{{hero.id}}</span>
+      <span class="name">{{hero.name}}</span>
+    </button>
+  </li>
+```
+
+-------
+
+Event binding is used when we want to bind html event to function in our component.ts file. For example a button click event binding would look like this:
+
+```html
+<button type="button" (click)="onSelect(hero)">
+```
+
+-------
+
+You add or remove css style classes dynamically with Angular's class binding for example:
+
+```html
+<button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
 ```
 
