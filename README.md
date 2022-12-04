@@ -11,7 +11,8 @@ Following the [Tour of heroes - angular.io tutorial](https://angular.io/tutorial
 - [x] 3 . Create a feature component
 - [x] 4 . Add services
 - [x] 5 . Add navigation
-- [ ] 6 . Get data from a server
+- [x] 6 . Get data from a server
+- [ ] Read the [Architecture section](https://angular.io/guide/architecture)
 
 ## Useful commands
 
