@@ -180,3 +180,70 @@ When using the component in another component you can add a  **property binding*
 
 This binds the input property 'hero' to the parent property 'selectedHero'
 
+### 4. Add services
+
+Services are created by default with `Injectable` symbol, which allows them to be injected into components/other services automatically using Angular's dependency injection.
+
+```typescript
+@Injectable({
+  providedIn: 'root',
+})
+export class HeroService {
+
+  constructor() { }
+
+}
+```
+
+`providedIn: 'root'` means it will be a singleton provided to every component which injects it.
+
+------
+
+To inject a service into a component you put it in its constructor like so:
+
+```typescript
+constructor(private heroService: HeroService) {}
+```
+
+------
+
+Load any data a component needs in it `ngOnInit()` function. The component has to implement `OnInit` interface and implement its method.
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+	...
+    
+@Component({
+  selector: 'app-heroes',
+  templateUrl: './heroes.component.html',
+  styleUrls: ['./heroes.component.css']
+})
+export class HeroesComponent implements OnInit {
+	...
+  ngOnInit(): void {
+      this.getHeroes();
+  }
+  	...
+}
+```
+
+-----
+
+When you load data from a service you should always load it asynchronously as to not block the browser while data is fetched and loaded.
+
+To make this possible services should return `Observable<T>` and when you load data you should use `subscribe()` method.
+
+```typ
+getHeroes(): Observable<Hero[]> {
+  const heroes = of(HEROES);
+  return heroes;
+}
+```
+
+```typ
+getHeroes(): void {
+  this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
+}
+```
+
