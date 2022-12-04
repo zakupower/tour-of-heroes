@@ -10,7 +10,7 @@ Following the [Tour of heroes - angular.io tutorial](https://angular.io/tutorial
 - [x] 2 . Display a list
 - [x] 3 . Create a feature component
 - [x] 4 . Add services
-- [ ] 5 . Add navigation
+- [x] 5 . Add navigation
 - [ ] 6 . Get data from a server
 
 ## Useful commands
@@ -32,6 +32,20 @@ Generate new component
 ```bash
 ng generate component heroes
 ```
+
+Generate new service
+
+```bash
+ng generate service heroes
+```
+
+Generate routing module
+
+```bash
+ng generate module app-routing --flat --module=app
+```
+
+
 
 ## Learning Notes
 
@@ -245,5 +259,100 @@ getHeroes(): void {
   this.heroService.getHeroes()
       .subscribe(heroes => this.heroes = heroes);
 }
+```
+
+### 5. Add navigation
+
+To add navigation to our application, we add `AppRoutingModule` which belongs to `routing.module.ts` in `src/app` directory. You can generate it.
+
+------
+
+This routing `app-routing.module.ts` should look something like this:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HeroesComponent } from './heroes/heroes.component';
+
+const routes: Routes = [
+  { path: 'heroes', component: HeroesComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+
+------
+
+To use this routing module in your application, you add it to the html as router-outlet like so:
+
+```html
+<h1>{{title}}</h1>
+<router-outlet></router-outlet>
+<app-messages></app-messages>
+```
+
+------
+
+To create links that use the route you use them in anchor tags with `routerLink` property like so:
+
+```html
+<h1>{{title}}</h1>
+<nav>
+  <a routerLink="/heroes">Heroes</a>
+</nav>
+<router-outlet></router-outlet>
+<app-messages></app-messages>
+```
+
+------
+
+If we want to add a default route and a path variable route we can do it like so:
+
+```typescript
+const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'heroes', component: HeroesComponent }
+];
+```
+
+-----
+
+To pass a variable to the routerLink you can do it like so:
+
+```html
+<a *ngFor="let hero of heroes"
+  routerLink="/detail/{{hero.id}}">
+  {{hero.name}}
+</a>
+```
+
+------
+
+To get information about the route this instance of a component is at you can inject `ActivatedRoute`. If you want to interact with the browser you can use `Location` directive. Like so:
+
+```typescript
+constructor(
+  private route: ActivatedRoute,
+  private heroService: HeroService,
+  private location: Location
+) {}
+```
+
+Getting a path variable from ActivatedRoute is done like so:
+
+```typescript
+const id = Number(this.route.snapshot.paramMap.get('id'));
+```
+
+To go back using the Location directive you:
+
+```typescript
+this.location.back();
 ```
 
