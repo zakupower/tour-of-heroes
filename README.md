@@ -8,7 +8,7 @@ Following the [Tour of heroes - angular.io tutorial](https://angular.io/tutorial
 - [x] Create a project
 - [x] 1 . The hero editor
 - [x] 2 . Display a list
-- [ ] 3 . Create a feature component
+- [x] 3 . Create a feature component
 - [ ] 4 . Add services
 - [ ] 5 . Add navigation
 - [ ] 6 . Get data from a server
@@ -34,6 +34,8 @@ ng generate component heroes
 ```
 
 ## Learning Notes
+
+### 1. The hero editor
 
 Project's application wide style is defined in src/style.css.
 
@@ -129,7 +131,7 @@ imports: [
 ],
 ```
 
-------
+### 2. Display a list
 
 The `*ngFor` is Angular's **repeater** directive. It repeats the host element for each element in a collection. Host element is one it is placed on.
 
@@ -157,4 +159,24 @@ You add or remove css style classes dynamically with Angular's class binding for
 ```html
 <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
 ```
+
+### 3. Create a feature component
+
+It is better to divide our application into subcomponents each focused on a specific task or workflow
+
+-----
+
+The `Input` symbol from `@angular/core` library, can be used to add an input property to a subcomponent like so:
+
+```typescript
+@Input() hero?: Hero;
+```
+
+When using the component in another component you can add a  **property binding** which is one way like so:
+
+```html
+<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+```
+
+This binds the input property 'hero' to the parent property 'selectedHero'
 
